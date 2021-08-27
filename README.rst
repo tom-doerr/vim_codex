@@ -1,7 +1,6 @@
 =============================
  Simple Vim Codex plugin
 =============================
-..:Author: Adrian Perez <aperez@igalia.com>
 
 This is a simple plugin for Vim that will allow you to use OpenAI Codex.
 
