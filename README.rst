@@ -37,7 +37,7 @@ After installing the plugin, you need to install the openai package using
 
 Finally add your OpenAI access information in 
 ``~/.vim/bundle/vim_codex/python/AUTH.py``.
-You can find the access information on the website__.
+You can find your authentication information on the website__.
 
 __ https://beta.openai.com/account/api-keys
 
