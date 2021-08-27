@@ -3,6 +3,7 @@
 =============================
 
 This is a simple plugin for Vim that will allow you to use OpenAI Codex.
+To use this plugin you need to have access to OpenAIs Codex models.
 
 
 Installation
@@ -25,6 +26,17 @@ bundle managers are expected to work as well.
 
 __ https://github.com/gmarik/vundle
 
+
+Before using the plugin, you need to add your OpenAI access information in 
+``~/.vim/bundle/vim_codex/python/AUTH.py``.
+You can find the access information on the website__.
+
+__ https://beta.openai.com/account/api-keys
+
+Usage
+=====
+The plugin provides a `CreateCompletion` command which you can call by default using the mapping 
+``<Leader>co``.
 
 
 Updating
