@@ -29,6 +29,7 @@ bundle managers are expected to work as well.
 __ https://github.com/gmarik/vundle
 
 **Important:**
+
 Before using the plugin, you need to add your OpenAI access information in 
 ``~/.vim/bundle/vim_codex/python/AUTH.py``.
 You can find the access information on the website__.
