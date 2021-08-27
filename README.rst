@@ -32,8 +32,9 @@ __ https://github.com/gmarik/vundle
 
 **Important:**
 
-After installing the plugin, you need to install the openai package using
-``pip3 install openai``.
+After installing the plugin, you need to install the openai package::
+
+  pip3 install openai
 
 Finally add your OpenAI access information in 
 ``~/.vim/bundle/vim_codex/python/AUTH.py``.
