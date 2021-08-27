@@ -13,6 +13,7 @@ from AUTH import *
 
 openai.organization = ORGANIZATION_ID
 openai.api_key = SECRET_KEY
+MAX_SUPPORTED_INPUT_LENGTH = 4096
 
 def create_completion(): 
     vim_buf = vim.current.buffer
@@ -23,6 +24,7 @@ def create_completion():
     input_prompt = '\n'.join(vim_buf[row:])
     input_prompt += '\n'.join(vim_buf[:row-2])
     input_prompt += '\n' + vim_buf[row-1][:col]
+    input_prompt = input_prompt[-MAX_SUPPORTED_INPUT_LENGTH:]
 
     response = openai.Completion.create(engine='davinci-codex', prompt=input_prompt, best_of=1, temperature=0.1, max_tokens=64)
     completion = response['choices'][0]['text']
