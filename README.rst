@@ -1,5 +1,5 @@
 =============================
- Simple Vim Codex plugin
+ Vim Codex 
 =============================
 
 This is a simple plugin for Vim that will allow you to use OpenAI Codex.
