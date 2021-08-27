@@ -30,7 +30,6 @@ __ https://github.com/gmarik/vundle
 
 
 
-**Important:**
 
 After installing the plugin, you need to install the openai package::
 
