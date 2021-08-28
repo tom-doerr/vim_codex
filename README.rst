@@ -46,6 +46,13 @@ Usage
 The plugin provides a ``CreateCompletion`` command which you can call by default using the mapping 
 ``<Leader>co``.
 
+To complete the current text from insert and normal mode using Ctrl+x, you can add the following
+lines to your .vimrc::
+
+  nmap  <C-x> :CreateCompletion<CR>
+  imap  <C-x> <Esc>:CreateCompletion<CR>i
+
+
 
 Updating
 ========
