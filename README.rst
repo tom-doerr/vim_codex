@@ -43,7 +43,7 @@ __ https://beta.openai.com/account/api-keys
 
 Usage
 =====
-The plugin provides a `CreateCompletion` command which you can call by default using the mapping 
+The plugin provides a ``CreateCompletion`` command which you can call by default using the mapping 
 ``<Leader>co``.
 
 
