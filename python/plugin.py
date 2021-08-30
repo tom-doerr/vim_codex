@@ -38,7 +38,7 @@ def create_completion():
     
     row, col = vim.current.window.cursor
     input_prompt = '\n'.join(vim_buf[row:])
-    input_prompt += '\n'.join(vim_buf[:row-2])
+    input_prompt += '\n'.join(vim_buf[:row-1])
     input_prompt += '\n' + vim_buf[row-1][:col]
     response = complete_input(input_prompt)
     write_response(response)
@@ -51,7 +51,6 @@ def write_response(response):
             single_response = next(response)
         else:
             single_response = response
-        if single_response['choices'][0]['finish_reason'] != None: break
         completion = single_response['choices'][0]['text']
         row, col = vim.current.window.cursor
         current_line = vim.current.buffer[row-1]
@@ -81,4 +80,7 @@ def write_response(response):
 
         # Flush the vim buffer.
         vim.command("redraw")
+        if USE_STREAM_FEATURE:
+            if single_response['choices'][0]['finish_reason'] != None: break
+
 
