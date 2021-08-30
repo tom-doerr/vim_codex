@@ -73,7 +73,7 @@ def write_response(response):
             cursor_target_col = len(new_lines[0])
         else:
             cursor_target_col = 0
-        vim_win.cursor = (cursor_pos_base[0] + row_i + 1, cursor_target_col)
+        vim_win.cursor = (cursor_pos_base[0] + row_i, cursor_target_col)
 
         if not USE_STREAM_FEATURE:
             break
