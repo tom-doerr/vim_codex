@@ -62,6 +62,9 @@ def write_response(response):
                 new_line = new_line[:-1]
         new_lines = new_line.split('\n')
         new_lines.reverse()
+        if len(vim_buf) == row:
+            vim_buf.append('')
+               
         vim_buf[row-1] = None
         cursor_pos_base = tuple(vim_win.cursor)
         for row_i in range(len(new_lines)):
