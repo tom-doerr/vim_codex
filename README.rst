@@ -2,7 +2,7 @@
  Vim Codex 
 =============================
 
-.. image:: gifs/render1630099906410.gif
+.. image:: gifs/render1630417920644.gif
 
 This is a simple plugin for Vim that will allow you to use OpenAI Codex.
 To use this plugin you need to have access to OpenAI's `Codex API`_.
