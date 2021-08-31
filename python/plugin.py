@@ -19,7 +19,7 @@ USE_STREAM_FEATURE = True
 def complete_input_max_length(input_prompt, max_input_length=MAX_SUPPORTED_INPUT_LENGTH):
     input_prompt = input_prompt[-max_input_length:]
 
-    response = openai.Completion.create(engine='davinci-codex', prompt=input_prompt, best_of=1, temperature=0.5, max_tokens=64, stream=USE_STREAM_FEATURE)
+    response = openai.Completion.create(engine='davinci-codex', prompt=input_prompt, best_of=1, temperature=0.5, max_tokens=128, stream=USE_STREAM_FEATURE)
     return response
 
 def complete_input(input_prompt):
