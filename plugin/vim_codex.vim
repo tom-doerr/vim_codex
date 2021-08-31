@@ -26,7 +26,12 @@ function! CreateCompletion()
   python3 plugin.create_completion()
 endfunction
 
+function! CreateCompletionLine()
+  python3 plugin.create_completion(stop='\n')
+endfunction
+
 command! -nargs=0 CreateCompletion call CreateCompletion()
+command! -nargs=0 CreateCompletionLine call CreateCompletionLine()
 
 map <Leader>co :CreateCompletion<CR>
 
