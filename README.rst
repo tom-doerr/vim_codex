@@ -1,6 +1,4 @@
-=============================
- Vim Codex 
-=============================
+<h1 align="center">Vim Codex </h1>
 
 .. image:: gifs/render1630418854684.gif
 
