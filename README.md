@@ -1,4 +1,4 @@
-<h1 align="center">Vim Codex</h1>
+<h1 align="center">🤖 Vim Codex</h1>
 
 <img src='gifs/render1630418854684.gif'>
 
