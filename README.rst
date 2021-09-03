@@ -1,4 +1,7 @@
-<h1 align="center">Vim Codex </h1>
+.. class:: center
+=============================
+ Vim Codex 
+=============================
 
 .. image:: gifs/render1630418854684.gif
 
