@@ -19,7 +19,7 @@
     /><br />
     <a href="https://github.com/tom-doerr/vim_codex/commits/main"
 		><img
-			src="https://img.shields.io/github/last-commit/tom-doerr/vim_codex/dev"
+			src="https://img.shields.io/github/last-commit/tom-doerr/vim_codex/main"
 			alt="Latest commit"
     /></a>
     <a href="https://github.com/tom-doerr/vim_codex"
