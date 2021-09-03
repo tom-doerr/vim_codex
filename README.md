@@ -1,5 +1,34 @@
 <h1 align="center">🤖 Vim Codex</h1>
 
+
+<p align="center">
+    <a href="https://github.com/tom-doerr/vim_codex/stargazers"
+        ><img
+            src="https://img.shields.io/github/stars/tom-doerr/vim_codex"
+            alt="Repository's starts"
+    /></a>
+    <a href="https://github.com/tom-doerr/vim_codex/issues"
+        ><img
+            src="https://img.shields.io/github/issues-raw/tom-doerr/vim_codex"
+            alt="Issues"
+    /></a>
+    <a href="https://github.com/tom-doerr/vim_codex/blob/main/LICENSE"
+        ><img
+            src="https://img.shields.io/github/license/tom-doerr/vim_codex"
+            alt="License"
+    /><br />
+    <a href="https://github.com/tom-doerr/vim_codex/commits/main"
+		><img
+			src="https://img.shields.io/github/last-commit/tom-doerr/vim_codex/dev"
+			alt="Latest commit"
+    /></a>
+    <a href="https://github.com/tom-doerr/vim_codex"
+        ><img
+            src="https://img.shields.io/github/repo-size/tom-doerr/vim_codex"
+            alt="GitHub repository size"
+    /></a>
+</p>
+
 <img src='gifs/render1630418854684.gif'>
 
 This is a simple plugin for Vim that will allow you to use OpenAI Codex.
