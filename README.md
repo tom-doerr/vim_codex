@@ -1,5 +1,6 @@
 <h1 align="center">🤖 Vim Codex</h1>
 
+An AI plugin that does the work for you.
 
 <p align="center">
     <a href="https://github.com/tom-doerr/vim_codex/stargazers"
