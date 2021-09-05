@@ -30,8 +30,13 @@ function! CreateCompletionLine()
   python3 plugin.create_completion(stop='\n')
 endfunction
 
+function! FixLine()
+  python3 plugin.fix_line()
+endfunction
+
 command! -nargs=0 CreateCompletion call CreateCompletion()
 command! -nargs=0 CreateCompletionLine call CreateCompletionLine()
+command! -nargs=0 FixLine call FixLine()
 
 map <Leader>co :CreateCompletion<CR>
 

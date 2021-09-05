@@ -89,3 +89,18 @@ def write_response(response, stop):
             if single_response['choices'][0]['finish_reason'] != None: break
 
 
+def fix_line(stop='\n'): 
+    vim_buf = vim.current.buffer
+    input_prompt = '\n'.join(vim_buf[:])
+    
+    row, col = vim.current.window.cursor
+    input_prompt = '\n'.join(vim_buf[row:])
+    input_prompt += '\n'.join(vim_buf[:row-1])
+    input_prompt += '\n# Line containing error:'
+    input_prompt += '\n' + vim_buf[row-1]
+    input_prompt += '\n# Fixed line that does the same as above but does not throw an error:\n'
+    print("input_prompt:", input_prompt)
+    response = complete_input(input_prompt, stop=stop)
+    single_response = next(response)
+    completion = single_response['choices'][0]['text']
+    vim_buf[row-1] = completion
