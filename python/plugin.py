@@ -15,24 +15,37 @@ openai.organization = ORGANIZATION_ID
 openai.api_key = SECRET_KEY
 MAX_SUPPORTED_INPUT_LENGTH = 4096
 USE_STREAM_FEATURE = True
+MAX_TOKENS_DEFAULT = 64
 
-def complete_input_max_length(input_prompt, max_input_length=MAX_SUPPORTED_INPUT_LENGTH, stop=None):
+def complete_input_max_length(input_prompt, max_input_length=MAX_SUPPORTED_INPUT_LENGTH, stop=None, max_tokens=64):
     input_prompt = input_prompt[-max_input_length:]
-
-    response = openai.Completion.create(engine='davinci-codex', prompt=input_prompt, best_of=1, temperature=0.5, max_tokens=512, stream=USE_STREAM_FEATURE, stop=stop)
+    response = openai.Completion.create(engine='davinci-codex', prompt=input_prompt, best_of=1, temperature=0.5, max_tokens=max_tokens, stream=USE_STREAM_FEATURE, stop=stop)
     return response
 
-def complete_input(input_prompt, stop):
+def complete_input(input_prompt, stop, max_tokens):
     try:
-        response = complete_input_max_length(input_prompt, int(2.5 * MAX_SUPPORTED_INPUT_LENGTH), stop=stop)
+        response = complete_input_max_length(input_prompt, int(2.5 * MAX_SUPPORTED_INPUT_LENGTH), stop=stop, max_tokens=max_tokens)
     except openai.error.InvalidRequestError:
         response = complete_input_max_length(input_prompt, MAX_SUPPORTED_INPUT_LENGTH, stop=stop)
         # print('Using shorter input.')
 
     return response
 
+def get_max_tokens():
+    max_tokens = None
+    if vim.eval('exists("a:max_tokens")') == '1':
+        max_tokens_str = vim.eval('a:max_tokens')
+        if max_tokens_str:
+            max_tokens = int(max_tokens_str)
+
+    if not max_tokens:
+        max_tokens = MAX_TOKENS_DEFAULT
+
+    return max_tokens
+
 
 def create_completion(stop=None): 
+    max_tokens = get_max_tokens()
     vim_buf = vim.current.buffer
     input_prompt = '\n'.join(vim_buf[:])
     
@@ -40,7 +53,7 @@ def create_completion(stop=None):
     input_prompt = '\n'.join(vim_buf[row:])
     input_prompt += '\n'.join(vim_buf[:row-1])
     input_prompt += '\n' + vim_buf[row-1][:col]
-    response = complete_input(input_prompt, stop=stop)
+    response = complete_input(input_prompt, stop=stop, max_tokens=max_tokens)
     write_response(response, stop=stop)
 
 def write_response(response, stop):
