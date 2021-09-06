@@ -98,9 +98,15 @@ def fix_line(stop='\n'):
     input_prompt += '\n'.join(vim_buf[:row-1])
     input_prompt += '\n# Line containing error:'
     input_prompt += '\n' + vim_buf[row-1]
-    input_prompt += '\n# Fixed line that does the same as above but does not throw an error:\n'
+    input_prompt += '\n# Fixed line that does the same as above and is not uncommented but does not throw an error:'
+    input_prompt += '\n'
+    if vim_buf[row-1][0] == ' ':
+        input_prompt += ' '
+        completion_prefix = ' '
+    else:
+        completion_prefix = ''
     print("input_prompt:", input_prompt)
     response = complete_input(input_prompt, stop=stop)
     single_response = next(response)
     completion = single_response['choices'][0]['text']
-    vim_buf[row-1] = completion
+    vim_buf[row-1] = completion_prefix + completion
