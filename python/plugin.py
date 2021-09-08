@@ -119,7 +119,7 @@ def fix_line(stop='\n'):
     else:
         completion_prefix = ''
     print("input_prompt:", input_prompt)
-    response = complete_input(input_prompt, stop=stop)
+    response = complete_input(input_prompt, stop=stop, max_tokens=64)
     single_response = next(response)
     completion = single_response['choices'][0]['text']
     vim_buf[row-1] = completion_prefix + completion
