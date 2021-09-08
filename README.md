@@ -72,6 +72,8 @@ You can find your authentication information on the [website](https://beta.opena
 ## Usage
 The plugin provides a `CreateCompletion` command which you can call by default using the mapping 
 `<Leader>co`.
+You can give the `CreateCompletion` command the number of tokens it should produce as an argument, e.g. `CreateCompletion 1000`.
+If you want to just complete the current line, run `CreateCompletionLine`.
 
 To complete the current text from insert and normal mode using Ctrl+x, you can add the following
 lines to your .vimrc::
