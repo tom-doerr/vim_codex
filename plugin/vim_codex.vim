@@ -22,7 +22,7 @@ EOF
 
 
 
-function! CreateCompletion()
+function! CreateCompletion(max_tokens)
   python3 plugin.create_completion()
 endfunction
 
@@ -34,7 +34,7 @@ function! FixLine()
   python3 plugin.fix_line()
 endfunction
 
-command! -nargs=0 CreateCompletion call CreateCompletion()
+command! -nargs=? CreateCompletion call CreateCompletion(<q-args>)
 command! -nargs=0 CreateCompletionLine call CreateCompletionLine()
 command! -nargs=0 FixLine call FixLine()
 
