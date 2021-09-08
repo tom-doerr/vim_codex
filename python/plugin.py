@@ -97,7 +97,7 @@ def fix_line(stop='\n'):
     input_prompt = '\n'.join(vim_buf[row:])
     input_prompt += '\n'.join(vim_buf[:row-1])
     input_prompt += '\n# Line containing error:'
-    input_prompt += '\n' + vim_buf[row-1]
+    input_prompt += '\n#' + vim_buf[row-1]
     input_prompt += '\n# Fixed line that does the same as above and is not uncommented but does not throw an error:'
     input_prompt += '\n'
     if vim_buf[row-1][0] == ' ':
