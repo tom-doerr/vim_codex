@@ -34,9 +34,16 @@ function! FixLine()
   python3 plugin.fix_line()
 endfunction
 
+function! FixLines(line1, line2)
+  python3 plugin.fix_lines()
+endfunction
+
 command! -nargs=? CreateCompletion call CreateCompletion(<q-args>)
 command! -nargs=0 CreateCompletionLine call CreateCompletionLine()
-command! -nargs=0 FixLine call FixLine()
+command! -nargs=0 FixLines call FixLines(<q-args>)
+
+" Vim map command that allows a range.
+command! -nargs=0 -range RangeFix call FixLines(<line1>, <line2>)
 
 map <Leader>co :CreateCompletion<CR>
 

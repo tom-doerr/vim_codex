@@ -102,6 +102,57 @@ def write_response(response, stop):
             if single_response['choices'][0]['finish_reason'] != None: break
 
 
+def fix_lines():
+    # vim get lines currently selected in visual mode.
+    vim_buf = vim.current.buffer
+    vim_win = vim.current.window
+    selected_lines = vim_buf[vim_buf.mark('<')[0]-1:vim_buf.mark('>')[0]]
+    # Get the row and col of the visual selection.
+    row_start, col_start = vim_buf.mark('<')
+    row_end, col_end = vim_buf.mark('>')
+    # Print all rows and cols.
+    print(row_start, col_start)
+    print(row_end, col_end)
+    # Print the lines of the selection.
+    # print(vim_buf[row_start-1:row_end-1])
+    # Print the lines of the selection
+    # if len(selected_lines) ==
+    wrong_code_block = '\n#' + '\n#'.join(vim_buf[row_start-1:row_end]) 
+    input_prompt = '\n'.join(vim_buf[row_end:])
+    input_prompt += '\n'.join(vim_buf[:row_start-1])
+    input_prompt += '\n# Code containing errors:'
+    input_prompt += '\n# ======================='
+    input_prompt += wrong_code_block
+    input_prompt += '\n# ======================='
+    input_prompt += '\n# Fixed code that does the same as above and is not commented out but does not throw errors:'
+    input_prompt += '\n# ======================='
+    print("input_prompt:", input_prompt)
+    response = complete_input(input_prompt, stop=None, max_tokens=len(wrong_code_block)/2)
+    row, col = row_start, col_start
+    lines_to_insert = []
+    while True:
+        if not lines_to_insert:
+            single_response = next(response)
+            completion = single_response['choices'][0]['text']
+            lines_to_insert = completion.split('\n')
+            print("lines_to_insert:", lines_to_insert)
+
+        # Pop first element from list.
+        next_line = lines_to_insert.pop(0)
+        if row_end - row >= 0:
+            vim_buf[row-1] = next_line
+        else:
+            vim_buf[row-1:row-1] = [next_line]
+
+        vim.command("redraw")
+        if USE_STREAM_FEATURE:
+            if single_response['choices'][0]['finish_reason'] != None: break
+
+        row += 1
+        # vim_win.cursor = (row + 1, col)
+        vim_win.cursor = (row, col)
+
+
 def fix_line(stop='\n'): 
     vim_buf = vim.current.buffer
     input_prompt = '\n'.join(vim_buf[:])
