@@ -40,7 +40,7 @@ endfunction
 
 command! -nargs=? CreateCompletion call CreateCompletion(<q-args>)
 command! -nargs=0 CreateCompletionLine call CreateCompletionLine()
-command! -nargs=0 FixLines call FixLines(<q-args>)
+command! -nargs=0 FixLine call FixLine()
 
 " Vim map command that allows a range.
 command! -nargs=0 -range RangeFix call FixLines(<line1>, <line2>)
