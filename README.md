@@ -37,7 +37,7 @@
 </p>
 
 This is a simple plugin for Vim that will allow you to use OpenAI Codex.
-To use this plugin you need to have access to OpenAI's [Codex API](https://openai.com/blog/openai-codex/).
+To use this plugin you need to get access to OpenAI's [Codex API](https://openai.com/blog/openai-codex/).
 
 
 
