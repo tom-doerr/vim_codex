@@ -43,16 +43,55 @@ def get_max_tokens():
 
     return max_tokens
 
+def check_if_line_below_matches_stop_string(stop):
+    vim_buf = vim.current.buffer
+    row, col = vim.current.window.cursor
+    if row == len(vim_buf):
+        return False
+    next_line = vim_buf[row]
+    if next_line == stop:
+        return True
+    return False
+
+def check_if_current_line_empty():
+    vim_buf = vim.current.buffer
+    row, col = vim.current.window.cursor
+    if len(vim_buf[row-1]) == 0:
+        return True
+    return False
+
+def delete_current_line_if_empty_and_stop_below_matches_stop_string(stop):
+    vim_buf = vim.current.buffer
+    row, col = vim.current.window.cursor
+    if row == len(vim_buf):
+        return
+    next_line = vim_buf[row]
+    if next_line == stop:
+        if len(vim_buf[row-1]) == 0:
+            vim_buf[row-1:row] = []
+
 def get_first_line_below_cursor_with_text():
+    vim_buf = vim.current.buffer
+    row, col = vim.current.window.cursor
+    while True:
+        if row == len(vim_buf):
+            return '\n'
+        if len(vim_buf[row]) > 0:
+            return vim_buf[row]
+        row += 1
+
+
+def check_if_line_above_empty():
     """
-    Returns the first line below the cursor with text.
+    Returns true if the line above the cursor is empty.
     """
     vim_buf = vim.current.buffer
     row, col = vim.current.window.cursor
-    for row_i in range(row, len(vim_buf)):
-        if len(vim_buf[row_i]) > 0:
-            return vim_buf[row_i]
-    return None
+    if row == 1:
+        return True
+    if len(vim_buf[row-2]) == 0:
+        return True
+    return False
 
 def create_completion(stop=None): 
     max_tokens = get_max_tokens()
@@ -110,6 +149,8 @@ def write_response(response, stop):
         # Flush the vim buffer.
         vim.command("redraw")
         if USE_STREAM_FEATURE:
-            if single_response['choices'][0]['finish_reason'] != None: break
+            if single_response['choices'][0]['finish_reason'] != None:
+                delete_current_line_if_empty_and_stop_below_matches_stop_string(stop)
+                break
 
 
