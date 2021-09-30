@@ -104,8 +104,9 @@ def write_response(response, stop):
         else:
             single_response = response
         completion = single_response['choices'][0]['text']
-        if stop == '\n':
-            completion += '\n'
+        if single_response['choices'][0]['finish_reason'] != None:
+            if stop == '\n':
+                completion += '\n'
         row, col = vim.current.window.cursor
         current_line = vim.current.buffer[row-1]
         new_line = current_line[:col] + completion + current_line[col:]
