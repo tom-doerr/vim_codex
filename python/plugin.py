@@ -91,10 +91,6 @@ def create_completion(stop=None):
     input_prompt += '\n'.join(vim_buf[:row-1])
     input_prompt += '\n' + vim_buf[row-1][:col]
     stop = get_first_line_below_cursor_with_text()
-    # print('stop type', type(stop))
-    # print('stop len', len(stop))
-    # print("stop:", stop)
-    # input()
     response = complete_input(input_prompt, stop=stop, max_tokens=max_tokens)
     write_response(response, stop=stop)
 
