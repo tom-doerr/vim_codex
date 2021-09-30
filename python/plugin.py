@@ -43,6 +43,16 @@ def get_max_tokens():
 
     return max_tokens
 
+def get_first_line_below_cursor_with_text():
+    """
+    Returns the first line below the cursor with text.
+    """
+    vim_buf = vim.current.buffer
+    row, col = vim.current.window.cursor
+    for row_i in range(row, len(vim_buf)):
+        if len(vim_buf[row_i]) > 0:
+            return vim_buf[row_i]
+    return None
 
 def create_completion(stop=None): 
     max_tokens = get_max_tokens()
@@ -53,6 +63,7 @@ def create_completion(stop=None):
     input_prompt = '\n'.join(vim_buf[row:])
     input_prompt += '\n'.join(vim_buf[:row-1])
     input_prompt += '\n' + vim_buf[row-1][:col]
+    stop = get_first_line_below_cursor_with_text()
     response = complete_input(input_prompt, stop=stop, max_tokens=max_tokens)
     write_response(response, stop=stop)
 
