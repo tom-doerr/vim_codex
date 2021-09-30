@@ -43,30 +43,30 @@ def get_max_tokens():
 
     return max_tokens
 
-def check_if_line_below_matches_stop_string(stop):
-    vim_buf = vim.current.buffer
-    row, col = vim.current.window.cursor
-    if row == len(vim_buf):
-        return False
-    next_line = vim_buf[row]
-    if next_line == stop:
-        return True
-    return False
-
-def check_if_current_line_empty():
-    vim_buf = vim.current.buffer
-    row, col = vim.current.window.cursor
-    if len(vim_buf[row-1]) == 0:
-        return True
-    return False
-
 def delete_current_line_if_empty_and_stop_below_matches_stop_string(stop):
     vim_buf = vim.current.buffer
     row, col = vim.current.window.cursor
     if row == len(vim_buf):
         return
-    next_line = vim_buf[row]
+    # Get next none empty line using get_first_line_below_cursor_with_text
+    next_line = get_first_line_below_cursor_with_text()
     if next_line == stop:
+        if len(vim_buf[row-1]) == 0:
+            vim_buf[row-1:row] = []
+
+def delete_empty_inserted_lines_if_stop_matches_stop_string(stop):
+    vim_buf = vim.current.buffer
+    row, col = vim.current.window.cursor
+    if row == len(vim_buf):
+        return
+    # Get next none empty line using get_first_line_below_cursor_with_text
+    next_line = get_first_line_below_cursor_with_text()
+    if next_line == stop:
+        while True:
+            if len(vim_buf[row-1]) == 0:
+                vim_buf[row-1:row] = []
+            else:
+                break
         if len(vim_buf[row-1]) == 0:
             vim_buf[row-1:row] = []
 
@@ -75,23 +75,11 @@ def get_first_line_below_cursor_with_text():
     row, col = vim.current.window.cursor
     while True:
         if row == len(vim_buf):
-            return '\n'
+            return None
         if len(vim_buf[row]) > 0:
             return vim_buf[row]
         row += 1
 
-
-def check_if_line_above_empty():
-    """
-    Returns true if the line above the cursor is empty.
-    """
-    vim_buf = vim.current.buffer
-    row, col = vim.current.window.cursor
-    if row == 1:
-        return True
-    if len(vim_buf[row-2]) == 0:
-        return True
-    return False
 
 def create_completion(stop=None): 
     max_tokens = get_max_tokens()
@@ -103,6 +91,10 @@ def create_completion(stop=None):
     input_prompt += '\n'.join(vim_buf[:row-1])
     input_prompt += '\n' + vim_buf[row-1][:col]
     stop = get_first_line_below_cursor_with_text()
+    # print('stop type', type(stop))
+    # print('stop len', len(stop))
+    # print("stop:", stop)
+    # input()
     response = complete_input(input_prompt, stop=stop, max_tokens=max_tokens)
     write_response(response, stop=stop)
 
@@ -150,7 +142,8 @@ def write_response(response, stop):
         vim.command("redraw")
         if USE_STREAM_FEATURE:
             if single_response['choices'][0]['finish_reason'] != None:
-                delete_current_line_if_empty_and_stop_below_matches_stop_string(stop)
+                # delete_current_line_if_empty_and_stop_below_matches_stop_string(stop)
+                delete_empty_inserted_lines_if_stop_matches_stop_string(stop)
                 break
 
 
