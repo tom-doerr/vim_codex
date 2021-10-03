@@ -99,6 +99,16 @@ def write_response(response, stop):
     vim_buf = vim.current.buffer
     vim_win = vim.current.window
     while True:
+       # TODO: Fix bug that causes Vim to freeze when arrow keys are used.
+       # Check if the user pressed any key.
+        if vim_win.cursor[0] > len(vim_buf):
+            return
+        if vim_win.cursor[0] == len(vim_buf) and vim_win.cursor[1] > len(vim_buf[-1]):
+            return
+        if vim.eval('getchar(0)') != '0':
+            return
+
+
         if USE_STREAM_FEATURE:
             single_response = next(response)
         else:
