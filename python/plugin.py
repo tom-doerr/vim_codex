@@ -19,7 +19,7 @@ MAX_TOKENS_DEFAULT = 64
 
 def complete_input_max_length(input_prompt, max_input_length=MAX_SUPPORTED_INPUT_LENGTH, stop=None, max_tokens=64):
     input_prompt = input_prompt[-max_input_length:]
-    response = openai.Completion.create(engine='davinci-codex', prompt=input_prompt, best_of=1, temperature=0.5, max_tokens=max_tokens, stream=USE_STREAM_FEATURE, stop=stop)
+    response = openai.Completion.create(engine='cushman-codex', prompt=input_prompt, best_of=1, temperature=0.5, max_tokens=max_tokens, stream=USE_STREAM_FEATURE, stop=stop)
     return response
 
 def complete_input(input_prompt, stop, max_tokens):
@@ -27,7 +27,7 @@ def complete_input(input_prompt, stop, max_tokens):
         response = complete_input_max_length(input_prompt, int(2.5 * MAX_SUPPORTED_INPUT_LENGTH), stop=stop, max_tokens=max_tokens)
     except openai.error.InvalidRequestError:
         response = complete_input_max_length(input_prompt, MAX_SUPPORTED_INPUT_LENGTH, stop=stop)
-        # print('Using shorter input.')
+        print('Using shorter input.')
 
     return response
 
@@ -107,7 +107,6 @@ def write_response(response, stop):
             return
         if vim.eval('getchar(0)') != '0':
             return
-
 
         if USE_STREAM_FEATURE:
             single_response = next(response)
