@@ -63,6 +63,9 @@ def delete_empty_inserted_lines_if_stop_matches_stop_string(stop):
     next_line = get_first_line_below_cursor_with_text()
     if next_line == stop:
         while True:
+            if row >= len(vim_buf):
+                break
+            # Print the number of lines.
             if len(vim_buf[row-1]) == 0:
                 vim_buf[row-1:row] = []
             else:
