@@ -12,7 +12,7 @@
     /></a>
     <a href="https://github.com/tom-doerr/vim_codex/issues"
         ><img
-            src="https://img.shields.io/github/issues-raw/tom-doerr/vim_codex?colorA=2c2837&colorB=b9c4e3&style=for-the-badge&logo=starship style=flat-square"
+            src="https://img.shields.io/github/issues-raw/tom-doerr/vim_codex?style=for-the-badge&logo=starship style=flat-square"
             alt="Issues"
     /></a>
     <a href="https://github.com/tom-doerr/vim_codex/blob/main/LICENSE"
