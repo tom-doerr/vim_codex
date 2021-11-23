@@ -20,16 +20,6 @@
             src="https://img.shields.io/github/license/tom-doerr/vim_codex?colorA=2c2837&colorB=b9c4e3&style=for-the-badge&logo=starship style=flat-square"
             alt="License"
     /><br />
-    <a href="https://github.com/tom-doerr/vim_codex/commits/main"
-		><img
-			src="https://img.shields.io/github/last-commit/tom-doerr/vim_codex/main"
-			alt="Latest commit"
-    /></a>
-    <a href="https://github.com/tom-doerr/vim_codex"
-        ><img
-            src="https://img.shields.io/github/repo-size/tom-doerr/vim_codex"
-            alt="GitHub repository size"
-    /></a>
 </p>
 
 <p align="center">
