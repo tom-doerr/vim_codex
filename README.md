@@ -7,7 +7,7 @@
 <p align="center">
     <a href="https://github.com/tom-doerr/vim_codex/stargazers"
         ><img
-            src="https://img.shields.io/github/stars/tom-doerr/vim_codex"
+            src="https://img.shields.io/github/stars/tom-doerr/vim_codex&style=flat-square"
             alt="Repository's starts"
     /></a>
     <a href="https://github.com/tom-doerr/vim_codex/issues"
