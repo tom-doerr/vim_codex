@@ -7,7 +7,7 @@
 <p align="center">
     <a href="https://github.com/tom-doerr/vim_codex/stargazers"
         ><img
-            src="https://img.shields.io/github/stars/tom-doerr/vim_codex?colorA=2c2837&colorB=b9c4e3&style=for-the-badge&logo=starship style=flat-square"
+            src="https://img.shields.io/github/stars/tom-doerr/vim_codex?colorA=2c2837&style=for-the-badge&logo=starship style=flat-square"
             alt="Repository's starts"
     /></a>
     <a href="https://github.com/tom-doerr/vim_codex/issues"
@@ -17,7 +17,7 @@
     /></a>
     <a href="https://github.com/tom-doerr/vim_codex/blob/main/LICENSE"
         ><img
-            src="https://img.shields.io/github/license/tom-doerr/vim_codex?colorA=2c2837&colorB=b9c4e3&style=for-the-badge&logo=starship style=flat-square"
+            src="https://img.shields.io/github/license/tom-doerr/vim_codex?colorA=2c2837&style=for-the-badge&logo=starship style=flat-square"
             alt="License"
     /></a>
 </p>
