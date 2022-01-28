@@ -92,5 +92,8 @@ Vim like this::
 % vim +BundleUpdate
 ```
 
+-------------------------------------------------------------------
+
+[Traffic Statistics](https://tom-doerr.github.io/github_repo_stats_data/tom-doerr/vim_codex/latest-report/report.html)
 
 
