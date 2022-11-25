@@ -23,7 +23,7 @@
 </p>
 
 <p align="center">
-    <img src='gifs/render1630418854684.gif'>
+    <img src='https://user-images.githubusercontent.com/31919558/204023837-c753cb9e-88d0-4ad9-bd2f-fdffcc915351.gif'>
 </p>
 
 This is a simple plugin for Vim that will allow you to use OpenAI Codex.
