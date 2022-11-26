@@ -3,7 +3,7 @@ if !has("python3")
   finish
 endif
 
-if exists('g:sample_python_plugin_loaded')
+if exists('g:vim_codex_loaded')
     finish
 endif
 
@@ -38,4 +38,4 @@ command! -nargs=0 CreateCompletionLine call CreateCompletionLine()
 map <Leader>co :CreateCompletion<CR>
 
 
-let g:sample_python_plugin_loaded = 1
+let g:vim_codex_loaded = 1
