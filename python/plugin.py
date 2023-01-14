@@ -118,8 +118,54 @@ def get_first_line_below_cursor_with_text():
             return vim_buf[row]
         row += 1
 
+# TODO: make adjustable
+skip_list = [
+    "todo",
+    "fixme",
+]
 
-def create_completion(stop=None): 
+def sanitize_input(input_prompt: str, ignore_skiplist:bool = True) -> str:
+    """
+    Ignores specially marked lines
+    - the start of a comment containes `skip_list` -> remove the comment
+    - a comment starting with `codex-ignore` will ignore this and the next line
+    - `codex-on` and `codex-off` toggle multiple lines
+    """
+    # TODO: support trailing comments (might require syntax parsing)
+    lines = input_prompt.split('\n')
+    ignoring = False
+    ignoring_toggle = False
+    ignored_lines = []
+    for i, line in enumerate(lines):
+        if ignoring:
+            # WARNING: this prevents this line for being parsable
+            ignored_lines.append(i)
+            ignoring = False
+            continue
+
+        tmpline = line.strip()
+        if not tmpline.startswith('#'):
+            continue
+        tmpline = tmpline.removeprefix('#').strip()
+
+        if ignoring_toggle:
+            if tmpline.lower().startswith('codex-off'):
+                ignoring_toggle = False
+        elif tmpline.lower().startswith('codex-ignore'):
+            ignoring = True
+        elif ignore_skiplist and any(tmpline.lower().startswith(s) for s in skip_list):
+            # TODO: maybe remove whole comment block?
+            pass
+        elif tmpline.lower().startswith('codex-on'):
+             ignoring_toggle = True
+        else:
+            continue
+
+        ignored_lines.append(i)
+    return '\n'.join([lines[i] for i in range(len(lines)) if i not in ignored_lines])
+
+
+def create_completion(stop=None, ignore_skiplist=False):
     try:
         from AUTH import ORGANIZATION_ID, SECRET_KEY
 
@@ -130,13 +176,14 @@ def create_completion(stop=None):
     max_tokens = get_max_tokens()
     vim_buf = vim.current.buffer
     input_prompt = '\n'.join(vim_buf[:])
-    
+
     row, col = vim.current.window.cursor
     input_prompt = '\n'.join(vim_buf[row:])
     input_prompt += '\n'.join(vim_buf[:row-1])
     input_prompt += '\n' + vim_buf[row-1][:col]
     if not stop:
         stop = get_first_line_below_cursor_with_text()
+    input_prompt = sanitize_input(input_prompt, ignore_skiplist=ignore_skiplist)
     response = complete_input(input_prompt, stop=stop, max_tokens=max_tokens)
     write_response(response, stop=stop)
 
