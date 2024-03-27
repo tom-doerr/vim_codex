@@ -11,7 +11,9 @@ except:
   pass
 
 
-import openai
+from openai import OpenAI
+
+client = None
 
 MAX_SUPPORTED_INPUT_LENGTH = 4096
 USE_STREAM_FEATURE = True
@@ -43,24 +45,24 @@ def initialize_openai_api():
     """
     Initialize the OpenAI API
     """
+    global client
     # Check if file at API_KEYS_LOCATION exists
     create_template_ini_file()
     config = configparser.ConfigParser()
     config.read(API_KEYS_LOCATION)
 
-    openai.organization_id = config['openai']['organization_id'].strip('"').strip("'")
-    openai.api_key = config['openai']['secret_key'].strip('"').strip("'")
+    client = OpenAI(api_key=config['openai']['secret_key'].strip('"').strip("'"))
 
 
 def complete_input_max_length(input_prompt, max_input_length=MAX_SUPPORTED_INPUT_LENGTH, stop=None, max_tokens=64):
     input_prompt = input_prompt[-max_input_length:]
-    response = openai.Completion.create(engine='text-davinci-003', prompt=input_prompt, best_of=1, temperature=0.5, max_tokens=max_tokens, stream=USE_STREAM_FEATURE, stop=stop)
+    response = client.completions.create(model='gpt-3.5-turbo-instruct', prompt=input_prompt, best_of=1, temperature=0.5, max_tokens=max_tokens, stream=USE_STREAM_FEATURE, stop=stop)
     return response
 
 def complete_input(input_prompt, stop, max_tokens):
     try:
         response = complete_input_max_length(input_prompt, int(2.5 * MAX_SUPPORTED_INPUT_LENGTH), stop=stop, max_tokens=max_tokens)
-    except openai.error.InvalidRequestError:
+    except openai.InvalidRequestError:
         response = complete_input_max_length(input_prompt, MAX_SUPPORTED_INPUT_LENGTH, stop=stop, max_tokens=max_tokens)
         print('Using shorter input.')
 
@@ -120,12 +122,7 @@ def get_first_line_below_cursor_with_text():
 
 
 def create_completion(stop=None): 
-    try:
-        from AUTH import ORGANIZATION_ID, SECRET_KEY
-
-        openai.organization = ORGANIZATION_ID
-        openai.api_key = SECRET_KEY
-    except ModuleNotFoundError:
+    if client is None:
         initialize_openai_api()
     max_tokens = get_max_tokens()
     vim_buf = vim.current.buffer
@@ -157,8 +154,8 @@ def write_response(response, stop):
             single_response = next(response)
         else:
             single_response = response
-        completion = single_response['choices'][0]['text']
-        if single_response['choices'][0]['finish_reason'] != None:
+        completion = single_response.choices[0].text
+        if single_response.choices[0].finish_reason != None:
             if stop == '\n':
                 completion += '\n'
         row, col = vim.current.window.cursor
@@ -193,7 +190,7 @@ def write_response(response, stop):
         # Flush the vim buffer.
         vim.command("redraw")
         if USE_STREAM_FEATURE:
-            if single_response['choices'][0]['finish_reason'] != None:
+            if single_response.choices[0].finish_reason != None:
                 # delete_current_line_if_empty_and_stop_below_matches_stop_string(stop)
                 delete_empty_inserted_lines_if_stop_matches_stop_string(stop)
                 break
